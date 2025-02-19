@@ -17,9 +17,12 @@ app.use(express.urlencoded({extended:true,limit:'25mb'}));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
 app.use(cors({
-  origin: 'http://localhost:5174',
-  credentials: true 
+  origin: ['http://localhost:5173'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 
@@ -32,11 +35,6 @@ await mongoose.connect(process.env.DB_URL).then(()=>{
   process.exit(1);
 });
 app.use('/api/auth', authRoutes);
-
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
