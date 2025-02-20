@@ -4,7 +4,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+
+//all routes, pehle hi comments bana lene chahiye the
 import authRoutes from './src/users/user.route.js';
+import productRoutes from './src/products/products.route.js';
+
 
 dotenv.config();
 const app = express()
@@ -17,6 +21,7 @@ app.use(express.urlencoded({extended:true,limit:'25mb'}));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use('/api/products',productRoutes);
 
 app.use(cors({
   origin: ['http://localhost:5173'],
