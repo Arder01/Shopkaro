@@ -4,6 +4,7 @@ import RatingStars from "../../../components/RatingStars";
 import { useDispatch } from "react-redux";
 import { useFetchProductByIdQuery } from "../../../redux/features/products/productsApi";
 import { addToCart } from "../../../redux/features/cart/cartSlice";
+import ReviewsCard from "../reviews/ReviewsCard";
 
 const SingleProducts = () => {
   const { id } = useParams();
@@ -16,8 +17,8 @@ const SingleProducts = () => {
   const productReviews = data?.reviews || [];
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
-}
+    dispatch(addToCart(product));
+  };
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading product details.</p>;
@@ -71,18 +72,22 @@ const SingleProducts = () => {
                 <RatingStars rating={singleProduct?.rating} />
               </div>
             </div>
-            <button 
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(singleProduct)
-                        }}
-                        className='mt-6 px-6 py-3 bg-primary text-white rounded-md'>
-                            Add to Cart
-                        </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAddToCart(singleProduct);
+              }}
+              className="mt-6 px-6 py-3 bg-primary text-white rounded-md"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       </section>
-      <section className="section__container mt-8">Reviews here</section>
+      {/* display Reviews */}
+      <section className="section__container mt-8">
+        <ReviewsCard productReviews={productReviews} />
+      </section>
     </>
   );
 };
