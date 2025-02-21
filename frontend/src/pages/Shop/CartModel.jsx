@@ -7,14 +7,14 @@ import { removeFromCart, updateQuantity } from '../../redux/features/cart/cartSl
 const CartModel = ({products,isOpen,onClose}) => {
     const dispatch = useDispatch();
     
-    const handleQuantity = (type,id)=>{
-        const payload = {type,id}
-        dispatch(updateQuantity(payload))
+    const handleQuantity = (type,_id)=>{
+        //console.log("Updating   quantity:",{type,_id});
+        dispatch(updateQuantity({type,_id}))
     }
-    const handleRemove = (e,id)=>{
-        e.preventDefault() 
-        const payload = {id}
-        dispatch(removeFromCart(payload))
+    const handleRemove = (e,_id)=>{
+        e.preventDefault()
+        //console.log("Removing quantity:",{_id}); when used mongo db, there it is '_id' instead of 'id' hence had a huge bug suddenly, now solved
+        dispatch(removeFromCart({_id}))
     }
   return (
     <div className={`fixed z-[1000] inset-0 bg-black bg-opacity-50 transition-opacity ${isOpen ? "opacity-100":"opacity-0 pointer-events-none"}`}>
@@ -41,11 +41,11 @@ const CartModel = ({products,isOpen,onClose}) => {
                                         <p className='text-gray-600 text-sm'>${Number(item.price).toFixed(2)}</p>
                                     </div>
                                     <div className='flex flex-row md:justify-start justify-end items-center mt-2'>
-                                        <button onClick={()=>handleQuantity('decrement',item.id)} className='size-6 flex items-end justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8'>-</button>
+                                        <button onClick={()=>handleQuantity('decrement',item._id)} className='size-6 flex items-end justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8'>-</button>
                                         <span className='px-2 text-center mx-1'>{item.quantity}</span>
-                                        <button onClick={()=>handleQuantity('increment',item.id)} className='size-6 flex items-end justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8'>+</button>
+                                        <button onClick={()=>handleQuantity('increment',item._id)} className='size-6 flex items-end justify-center px-1.5 rounded-full bg-gray-200 text-gray-700 hover:bg-primary hover:text-white ml-8'>+</button>
                                         <div className='ml-5'>
-                                            <button onClick={(e)=>handleRemove(e,item.id)} className='text-red-500 hover:text-red-800 mr-4'>Remove</button>
+                                            <button onClick={(e)=>handleRemove(e,item._id)} className='text-red-500 hover:text-red-800 mr-4'>Remove</button>
                                         </div>
                                     </div>
                                 </div>

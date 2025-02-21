@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import authRoutes from './src/users/user.route.js';
 import productRoutes from './src/products/products.route.js';
 import reviewRoutes from './src/reviews/reviews.router.js';
+import orderRoutes from './src/orders/orders.route.js';
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ await mongoose.connect(process.env.DB_URL).then(()=>{
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
