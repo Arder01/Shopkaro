@@ -56,7 +56,7 @@ const authApi = createApi({
             query: (profileData)=>({
                 url:`/edit-profile`,
                 method:"PATCH",
-                body:{profileData}
+                body:profileData
             }),
         }),
     })

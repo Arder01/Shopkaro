@@ -13,6 +13,8 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import UserDMain from "../pages/dashboard/user/dashboard/UserDMain";
 import UserOrders from "../pages/dashboard/user/UserOrders";
 import UserPayments from "../pages/dashboard/user/UserPayments";
+import UserReviews from "../pages/dashboard/user/UserReviews";
+import UserProfile from "../pages/dashboard/user/UserProfile";
 
 const router = createBrowserRouter([
     {
@@ -42,10 +44,10 @@ const router = createBrowserRouter([
         children: [
             // user routes
             { path: '', element: <UserDMain/>},
-            { path: 'orders', element: <UserOrders/> },
+            { path: 'orders', element: <UserOrders /> },
             { path: 'payments', element: <UserPayments/> },
-            { path: 'profile', element: <div>User Profile</div> },
-            { path: 'reviews', element: <div>User Review</div> },
+            { path: 'profile', element: <UserProfile /> },
+            { path: 'reviews', element: <UserReviews /> },
             // admin routes (only accessible by admin) Todo: private routes with role field
             {
                 path: "admin",

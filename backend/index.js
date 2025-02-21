@@ -10,6 +10,7 @@ import authRoutes from './src/users/user.route.js';
 import productRoutes from './src/products/products.route.js';
 import reviewRoutes from './src/reviews/reviews.router.js';
 import orderRoutes from './src/orders/orders.route.js';
+import statsRoutes from './src/stats/stats.route.js';
 
 
 dotenv.config();
@@ -39,6 +40,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/stats', statsRoutes)
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

@@ -9,6 +9,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const UserDMain = () => {
     const {user} = useSelector((state) => state.auth);
+    console.log("UserDMain user log", user);
     const {data: stats, error, isLoading} = useGetUserStatsQuery(user?.email)
     console.log(stats)
     if(isLoading) return <div className='text-center text-gray-500'>Loading...</div>

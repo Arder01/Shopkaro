@@ -1,48 +1,48 @@
 import express from 'express'
 import User from './../users/user.model.js'
 import Order from '../orders/orders.model.js'
-import Reviews from '../reviews/reviews.model'
-import Products from '../products/products.model'
+import Reviews from '../reviews/reviews.model.js'
+import Products from '../products/products.model.js'
 const router = express.Router();
 
 // user stats by email
 router.get('/user-stats/:email', async(req, res) => {
-    const { email } = req.params;
-    if (!email) {
-        return res.status(400).send({ message: 'Email is required' });
-    }
-     try {
-        const user =  await User.findOne({ email: email})
-        
-        if(!user) return res.status(404).send({ message: 'User not found' });
+  const { email } = req.params;
+  if (!email) {
+      return res.status(400).send({ message: 'Email is required' });
+  }
+   try {
+      const user =  await User.findOne({ email: email})
+      
+      if(!user) return res.status(404).send({ message: 'User not found' });
 
-        // sum of all orders
-        const totalPaymentsResult =  await Order.aggregate([
-            { $match: {email: email}},
-            {
-                $group: {_id: null, totalAmount: {$sum: "$amount"}}
-            }
-        ])
+      // sum of all orders
+      const totalPaymentsResult =  await Order.aggregate([
+          { $match: {email: email}},
+          {
+              $group: {_id: null, totalAmount: {$sum: "$amount"}}
+          }
+      ])
 
-        const totalPaymentsAmmount =  totalPaymentsResult.length > 0 ? totalPaymentsResult[0].totalAmount : 0
+      const totalPaymentsAmmount =  totalPaymentsResult.length > 0 ? totalPaymentsResult[0].totalAmount : 0
 
-        // get total review 
-        const totalReviews = await Reviews.countDocuments({userId: user._id})
+      // get total review 
+      const totalReviews = await Reviews.countDocuments({userId: user._id})
 
-        // total purchased products
-        const purchasedProductIds = await Order.distinct("products.productId", {email: email});
-        const totalPurchasedProducts =  purchasedProductIds.length;
+      // total purchased products
+      const purchasedProductIds = await Order.distinct("products.productId", {email: email});
+      const totalPurchasedProducts =  purchasedProductIds.length;
 
-        res.status(200).send({
-           totalPayments: totalPaymentsAmmount.toFixed(2),
-           totalReviews,
-           totalPurchasedProducts
-        });
-        
-     } catch (error) {
-        console.error("Error fetching user stats", error);
-        res.status(500).send({ message: 'Failed to fetch user stats' });
-     }
+      res.status(200).send({
+         totalPayments: totalPaymentsAmmount.toFixed(2),
+         totalReviews,
+         totalPurchasedProducts
+      });
+      
+   } catch (error) {
+      console.error("Error fetching user stats", error);
+      res.status(500).send({ message: 'Failed to fetch user stats' });
+   }
 })
 
 // admin status 
@@ -107,4 +107,4 @@ router.get('/admin-stats', async (req, res) => {
     }
   });
 
-module.exports = router;
+export default router;
