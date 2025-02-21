@@ -11,7 +11,7 @@ import productRoutes from './src/products/products.route.js';
 import reviewRoutes from './src/reviews/reviews.router.js';
 import orderRoutes from './src/orders/orders.route.js';
 import statsRoutes from './src/stats/stats.route.js';
-
+import uploadImage from './src/utils/uploadImage.js';
 
 dotenv.config();
 const app = express()
@@ -45,6 +45,12 @@ app.use('/api/stats', statsRoutes)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+
+app.post("/uploadImage", (req, res) => {
+  uploadImage(req.body.image)
+    .then((url) => res.send(url))
+    .catch((err) => res.status(500).send(err));
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -42,7 +42,7 @@ const Navbar = () => {
         {label:"Dashboard",path:"/dashboard/admin"}, 
         {label:"Manage Items",path:"/dashboard/manage-products"}, 
         {label:"All Orders",path:"/dashboard/manage-orders"}, 
-        {label:"Add New Post",path:"/dashboard/add-new-post"}, 
+        {label:"Add New Product",path:"/dashboard/add-new-post"}, 
     ]
     
     //user Dropdown menu
