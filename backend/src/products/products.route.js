@@ -92,30 +92,28 @@ router.get("/:id", async (req, res) => {
 });
 
 //update a product
-router.patch(
-  "/update-product/:id",
-  verifyToken,
-  verifyAdmin,
-  async (req, res) => {
-    try {
-      const productId = req.params.id;
-      const updatedProduct = await Products.findByIdAndUpdate(
-        productId,
-        { ...req.body },
-        { new: true }
-      );
-      if (!updatedProduct)
-        return res.status(404).send({ message: "Product Not Found" });
-      res.status(200).send({
-        message: "Product Updated Succesfully",
-        product: updatedProduct,
-      });
-    } catch (err) {
-      console.error("Error Updating the product", error);
-      res.status(500).send({ message: "Failed to update the product" });
+router.patch("/update-product/:id", verifyToken, verifyAdmin, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updatedProduct = await Products.findByIdAndUpdate(
+      productId,
+      { ...req.body },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res.status(404).send({ message: "Product not found" });
     }
+
+    res.status(200).send({
+      message: "Product updated successfully",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    console.error("Error updating the product", error);
+    res.status(500).send({ message: "Failed to update the product" });
   }
-);
+});
 
 //delete a product
 router.delete("/:id", async (req, res) => {
